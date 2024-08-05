@@ -8,7 +8,8 @@ import io
 app = Flask(__name__)
 
 # Load the ONNX model
-ort_session = ort.InferenceSession('../model.onnx')
+ort_session = ort.InferenceSession('./model.onnx')
+
 
 
 # Function to load and preprocess a single image
@@ -33,6 +34,10 @@ def predict_image(ort_session, img_array, label_names):
     confidence_score = np.max(predictions, axis=1)[0]
     return predicted_label, confidence_score
 
+
+@app.route('/', methods=['GET'])
+def start():
+    return 'Welcome to the AI-Powered Plant Disease Detection API!'
 
 @app.route('/predict', methods=['POST'])
 def predict():
